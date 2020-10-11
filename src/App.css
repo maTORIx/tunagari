@@ -1,3 +1,27 @@
+h2 {
+  font-weight: normal;
+  margin-top: 0em;
+  margin-bottom: 0.3em;
+}
+
+h3 {
+  font-weight: normal;
+  margin: 0 0 0.3em 0;
+}
+
+p {
+  margin: 0;
+}
+
+.wrap {
+  white-space: pre-wrap;
+}
+
+.indent {
+  border-left: 2px solid black;
+  padding-left: 0.5em;
+}
+
 .App {
   text-align: center;
 }
@@ -41,24 +65,34 @@
   height: 3em;
   width: 100vw;
   display: flex;
-  position: absolute;
   top: 0px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* background-color: #dddddd; */
-  border-bottom: 1px solid black;
+  padding-top: 1em;
 }
 
 .header-container .header-text {
+  font-family: sans-serif;
   text-align: left;
   font-size: 1.8em;
-  font-weight: bold;
-  padding-left: 10px;
+  padding-left: 0.5em;
 }
 
 .header-container .user-preview {
   padding-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.header-container .user-img {
+  padding-left: 1em;
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.header-container .user-name {
+  padding-bottom: 0.2em;
 }
 
 .header-container .user-container {
@@ -86,13 +120,37 @@ button {
   color: black;
   padding: 0.5em 2em;
   border: 1px solid black;
-  font-weight: bold;
   border-radius: 4px;
   width: 100%;
+  font-size: 0.9em;
+}
+
+button + img.loading-icon {
+  position: absolute;
+  right: 5em;
+  padding-top: 0.4em;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+h2 + button {
+  position: relative;
+  width: 0;
+  height: 0;
+  padding: 0;
+  left: 95%;
+  bottom: 2.5em;
+  border: none;
+  display: flex;
+}
+
+h2 + button img {
+  border: 2px solid black;
+  border-radius: 0.7em;
 }
 
 .main-container {
-  padding: 3em 1em;
+  padding: 1em;
 }
 
 .radio-input {
@@ -123,11 +181,87 @@ input {
 
 input + label {
   position: absolute;
-  left: 90%;
+  right: 1.6em;
   padding-top: 0.15em;
 }
 
 input:focus {
   border: 1px solid #ff9900;
   outline: 0;
+}
+
+input.failed {
+  border: 2px solid red;
+  background-color: pink;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  height: 4em;
+  font-family: Arial, Helvetica, sans-serif;
+  resize: vertical;
+  border-radius: 3px;
+}
+
+textarea.failed {
+  border: 2px solid red;
+  background-color: pink;
+}
+
+textarea + div.length-limit {
+  position: relative;
+  text-align: right;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 0.6em;
+  bottom: 2em;
+  height: 0px;
+}
+
+.tag-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.tag-list .tag-container {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.tag-list .tag-container .tag-name {
+  font-size: 1.2em;
+  width: 100%;
+  padding-left: 1em;
+}
+
+.tag-list .tag-container .tag-icon {
+  width: 2em;
+  height: 2em; 
+}
+
+.board-container {
+  margin-bottom: 2em;
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+.board-container h3 {
+  text-decoration: underline;
+  font-size: 1em;
+}
+
+.board-container p {
+  max-height: 4.2em;
+  text-overflow: ellipsis;
+  font-size: 0.7em;
+  overflow: hidden;
 }

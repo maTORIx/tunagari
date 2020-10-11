@@ -2,7 +2,22 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userID} {
-      allow read, create, update: if request.auth.uid == userID
+      allow read, write: if request.auth.uid == userID;
+    }
+    match /userHistory/{userID} {
+      allow read, write: if request.auth.uid == userID;
+    }
+    match /tags/{tagID} {
+      allow create: if resource.id.length <= 15 && resource.tagName.length >= 1;
+      allow read: if true;
+    }
+    match /boards/{boardID} {
+      allow create: if resource.data.title.length <= 100 && resource.data.title.length > 0 && resource.tagName.length <= 15 && resource.tagName.length > 0 && resource.tagName.length >= 1 && resource.data.firstContent.length <= 1000 && resource.data.firstContent.length > 0;
+      allow read: if true;
+    }
+    match /chats/{chatID} {
+      allow create: if resource.data.content.length <= 1000 && resource.data.content.length > 0 && resource.data.uid == request.auth.uid && resource.data.userName.length <= 15 && resource.data.userName.length >= 1;
+      allow read: if true;
     }
     match /{document=**} {
       allow read, create: if true;

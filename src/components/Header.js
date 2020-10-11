@@ -1,17 +1,19 @@
 import React from 'react'
 import { withRouter } from "react-router-dom"
-import { firebase, signin, signout, user } from "../firebase"
+import { signin, signout, user } from "../firebase"
+import AccountCircleSVG from "../account_circle-black-18dp.svg"
 
 class Header extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { showUserContainer: false, userName: "" }
+        this.state = { showUserContainer: false, userName: '' }
         this.toggleUserContainer = this.toggleUserContainer.bind(this)
         this.onClickSigninButton = this.onClickSigninButton.bind(this)
         this.onClickSignoutButton = this.onClickSignoutButton.bind(this)
-        document.addEventListener("userLoaded", (() => {
+        if (user.uid !== null) this.state.userName = user.data.name
+        document.addEventListener("userLoaded", () => {
             this.setState({ userName: user.data.name })
-        }).bind(this))
+        })
     }
 
     render() {
@@ -19,7 +21,8 @@ class Header extends React.Component {
             <div className="header-container">
                 <div className="header-text">{this.props.title}</div>
                 <div className="user-preview" onClick={this.toggleUserContainer}>
-                    {this.state.userName}
+                    <div className="user-name">{this.state.userName}</div>
+                    <img className="user-img" src={AccountCircleSVG} alt="icon" />
                 </div>
                 {this.state.showUserContainer && (<div className="user-container">
                     {!user.authenticated && (
@@ -53,9 +56,9 @@ class Header extends React.Component {
     }
 
     onClickSignoutButton() {
-        signout().then((() => {
+        signout().then(() => {
             this.render()
-        }).bind(this))
+        })
     }
 }
 

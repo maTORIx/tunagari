@@ -1,6 +1,7 @@
 import firebase from "firebase/app"
 import "firebase/firebase-auth"
 import "firebase/firebase-firestore"
+import { setError } from "./error"
 
 var firebaseConfig = {
     apiKey: "AIzaSyDcRHJWndJ8GQhk1Br8fgpBXHOEOHNTMCE",
@@ -50,7 +51,6 @@ firebase.auth().onAuthStateChanged((currentUser) => {
     }
     user.authenticated = !currentUser.isAnonymous
     user.uid = currentUser.uid
-    console.log(currentUser)
     return loadUserData(currentUser.uid)
 })
 
@@ -61,7 +61,7 @@ function signin() {
         user.uid = result.user.uid
         return loadUserData(user.uid)
     }).catch(function (error) {
-        console.error(error)
+        setError(error)
     })
 }
 
@@ -89,10 +89,9 @@ function signout() {
             uid: null
         }
     }).catch((error) => {
-        console.error(error)
-        throw error
+        setError(error)
     })
 }
 
 
-export { firebase, db, signin, signout, user }
+export { firebase, db, signin, signout, user, defaultUserData }

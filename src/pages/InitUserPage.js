@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, withRouter } from "react-router-dom"
 import '../App.css';
 import Header from '../components/Header'
-import { firebase, user, signin, db } from '../firebase';
+import { setError } from '../error';
+import { user, signin, db } from '../firebase';
 
 class InitUserPage extends React.Component {
     constructor(props) {
@@ -102,7 +103,7 @@ class InitUserPage extends React.Component {
     }
 
     validataionUserName(userName) {
-        const regex = /^[a-zA-Z0-9ぁ-んァ-ヶ亜-熙_\(\)]+$/
+        const regex = /^[a-zA-Z0-9ぁ-んァ-ヶ亜-熙_()]+$/
         if (userName.length < 15
             && userName.length > 1
             && userName.match(regex)) {
@@ -131,9 +132,9 @@ class InitUserPage extends React.Component {
             this.setState({ step: step + 1 })
         } else if (step === 3) {
             this.setState({ step: step + 1 })
-            this.submit().then((() => {
+            this.submit().then(() => {
                 this.setState({ step: step + 1 })
-            }).bind(this))
+            })
         }
     }
 
@@ -142,13 +143,12 @@ class InitUserPage extends React.Component {
             window.alert("Oops!。ログインしていないようです。")
             await signin()
         }
-        console.log(this.state)
         return db.collection("users").doc(user.uid).set({
             name: this.state.userName,
             gender: this.state.gender,
             yearOfBirth: this.state.yearOfBirth
-        }).catch((e) => {
-            console.error(e)
+        }).catch((error) => {
+            setError(error)
         })
     }
 }
